@@ -1,0 +1,28 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "cppbuild",
+			"label": "g++ build active file",				//Name in tasks list
+			"command": "/usr/bin/g++",   							//Specifies the application to run (g++)
+			"args": [												//Cmd args which will be passed on to g++
+				"-g",
+				"${file}",
+				"-fopenmp",											//file to compile
+				"-o",
+				"${fileDirname}/bin/${fileBasenameNoExtension}"			//folder for the compiled executable
+			],
+			"options": {
+				"cwd": "/usr/bin"
+			},
+			"problemMatcher": [
+				"$gcc"
+			],
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			},
+			"detail": "compiler: /usr/bin/g++"
+		}
+	]
+}
