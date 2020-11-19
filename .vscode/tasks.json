@@ -10,7 +10,7 @@
 				"${file}",
 				"-fopenmp",											//file to compile
 				"-o",
-				"${fileDirname}/bin/${fileBasenameNoExtension}"			//folder for the compiled executable
+				"${workspaceFolder}/bin/${fileBasenameNoExtension}"			//folder for the compiled executable
 			],
 			"options": {
 				"cwd": "/usr/bin"
