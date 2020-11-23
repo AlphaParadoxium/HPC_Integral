@@ -2,11 +2,7 @@
 //  Implementation class
 //
 
-#include <math.h>
-#include <iostream>
 #include "../Header/Helper.hpp"
-#include <functional>
-#include <limits>
 
 typedef std::numeric_limits< double > dbl;
 
@@ -20,7 +16,7 @@ double calculateIntegralSimpleWithFunction(double begin, double end, double step
     for(;begin <= end; begin += stepSize){
 
         //Summation of the integral value for every step
-        calculationResult += Helper::straightLine(begin) * stepSize;
+        calculationResult += MathEquations::straightLine(begin) * stepSize;
     }
 
     return calculationResult;
@@ -56,16 +52,6 @@ double calculateIntegralSimple(std::function<double(double)> equation, double be
     return calculationResult;
 }
 
-//@brief final primitv integral calculation
-double calculateIntegral(std::function<double(double)> equation, double begin, double end, double stepSize){
-    double calculationResult = 0.00;
-
-    for(;begin < end; begin += stepSize){
-        calculationResult += equation(begin) * stepSize;
-        //std::cout << calculationResult << std::endl;
-    }
-    return calculationResult;
-}
 
 int main(){
 
@@ -86,18 +72,17 @@ int main(){
     }
     //Thrid Case: Helper Function as input
     {
-        double result = calculateIntegralSimple(Helper::straightLine, -5.0, 0, 0.01);
+        double result = calculateIntegralSimple(MathEquations::straightLine, -5.0, 0, 0.01);
         std::cout << "Calculated result is: " << result << std::endl;
        
     }
     //Fourth Case: Improved Simple Function
     {
-        double result = calculateIntegral(Helper::straightLine, -5.0, 5.0, 0.0001);
+        double result = Helper::serialCalculateIntegral(MathEquations::straightLine, -5.0, 5.0, 0.001);
         std::cout.precision(dbl::max_digits10);
         std::cout << "Calculated result is: " << result << std::endl;
         //Result: Problem precision of the calculated value is inaccurate
     }
-
 
     return 0;
 }
