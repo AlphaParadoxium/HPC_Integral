@@ -3,7 +3,6 @@
 #include <functional>
 #include <iostream>
 #include <limits>
-
 #include "../Header/Helper.hpp"
 
 inline double parallelIntegralCalculation(std::function<double(double)> equation, double begin, double end, double stepSize, int workPackageNr)
@@ -11,31 +10,25 @@ inline double parallelIntegralCalculation(std::function<double(double)> equation
     return equation(begin + (stepSize*workPackageNr)) * stepSize;
 }
 
+typedef std::numeric_limits< double > dbl;
+
 int main(){
 
-    //Check input values begin < end !!
     double begin = 0.00;
     double end = 5.00;
-    double stepSize = 0.0001;
-
+    double stepSize = 0.0000001;
     int stepCountMax = (end - begin) / stepSize;
     
-    double results[stepCountMax];
-    //At which condition does the for loop end?
-    //Needs to be calculated begin 
-    #pragma omp parallel for
+    double calculationResult;
+   
+    #pragma omp parallel for reduction(+:calculationResult) num_threads(2)
     for (int i = 0; i < stepCountMax; i++)
     {
-        results[i]= parallelIntegralCalculation(MathEquations::testFunction, begin,end,stepSize,i);
+        calculationResult += parallelIntegralCalculation(MathEquations::testFunction, begin,end,stepSize,i);
     }
 
-    //Implizit barrier
-    double ergebnis = 0.00;
-    for(double result: results){
-        ergebnis += result;
-    }
-    
-    std::cout << ergebnis << std::endl;
+    std::cout.precision(dbl::max_digits10);
+    std::cout << calculationResult << std::endl;
 
     return 0;
 }

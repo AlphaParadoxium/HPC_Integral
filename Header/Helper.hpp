@@ -21,7 +21,6 @@ namespace Helper{
 
         for(;begin < end; begin += stepSize){
             calculationResult += equation(begin) * stepSize;
-            std::cout << calculationResult << std::endl;
         }
         return calculationResult;
     }
@@ -41,6 +40,10 @@ namespace MathEquations{
 
     double testFunction(double fx){
         return pow(fx,2) + pow(fx,3) + 10*fx + 30;
+    }
+
+    double expensiveFunction(double fx){
+        return sin(pow(fx,2)) + pow(fx,3) + 10*fx + cos(30) + sin(10*fx);
     }
 }
 
